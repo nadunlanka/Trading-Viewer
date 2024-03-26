@@ -58,3 +58,9 @@ export type ToastConfig = {
   progress: undefined;
   theme: string;
 };
+
+export type Coin = {
+  id: string;
+  symbol: string;
+  name: string;
+};

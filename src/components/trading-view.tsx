@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Loader from './spinner';
 import {
+  Coin,
   Currencies,
   EnhancedTableProps,
   HeadCell,
@@ -20,6 +21,7 @@ import Paper from '@mui/material/Paper';
 import { TableHead } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
 import { COIN_GECKO_API, COIN_GECKO_COIN_URL, COIN_GECKO_IMAGE_URL, LOADING_ERROR } from '../const';
+import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 
 const TradingDataTable: React.FC = () => {
   const colors = {
@@ -46,14 +48,19 @@ const TradingDataTable: React.FC = () => {
   const [rowsPerPage, setRowsPerPage] = useState<number>(15);
   const [page] = React.useState(0);
   const [currencyCount, setCurrencyCount] = React.useState(0);
+  const [coins, setCoins] = React.useState<Coin[]>([]);
+  const [filteredCoin, setFilteredCoin] = React.useState<Coin | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(
-          `${COIN_GECKO_API}/coins/markets?vs_currency=${currencies.currency}&page=${activePage + 1}&per_page=${rowsPerPage}&price_change_percentage=1h,24h,7d`
-        );
+        let url = `${COIN_GECKO_API}/coins/markets?vs_currency=${currencies.currency}&page=${activePage + 1}&per_page=${rowsPerPage}&price_change_percentage=1h,24h,7d`;
+
+        if (filteredCoin) {
+          url = `${url}&ids=${filteredCoin.id}`;
+        }
+        const response = await axios.get(url);
         setData(response.data);
       } catch (error: unknown) {
         toast.error(LOADING_ERROR, toastConfig);
@@ -62,7 +69,7 @@ const TradingDataTable: React.FC = () => {
       }
     };
     fetchData();
-  }, [activePage, rowsPerPage]);
+  }, [activePage, rowsPerPage, filteredCoin]);
 
   useEffect(() => {
     const fetchGlobalData = async () => {
@@ -79,8 +86,31 @@ const TradingDataTable: React.FC = () => {
     fetchGlobalData();
   }, []);
 
+  useEffect(() => {
+    const fetchCoinData = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(`${COIN_GECKO_API}/coins/list`);
+        setCoins(response.data);
+      } catch (error: unknown) {
+        toast.error(LOADING_ERROR, toastConfig);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCoinData();
+  }, []);
+
   const getCoinId = (imageLink: string) => {
     return parseInt(imageLink.split(`${COIN_GECKO_IMAGE_URL}/`)[1].split('/large/')[0]);
+  };
+
+  const handleOnSelect = (item: Coin) => {
+    setFilteredCoin(item);
+  };
+
+  const handleOnClear = () => {
+    setFilteredCoin(null);
   };
 
   const headCells: HeadCell[] = [
@@ -161,6 +191,18 @@ const TradingDataTable: React.FC = () => {
     );
   };
 
+  const FilterByCoin = () => {
+    return (
+      <ReactSearchAutocomplete
+        items={coins}
+        onSelect={handleOnSelect}
+        inputSearchString={filteredCoin?.id}
+        onClear={handleOnClear}
+        placeholder="Filter by coin"
+      />
+    );
+  };
+
   return (
     <>
       <h1>Trading View</h1>
@@ -169,6 +211,7 @@ const TradingDataTable: React.FC = () => {
         <Loader />
       ) : (
         <>
+          <FilterByCoin />
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
               <EnhancedTableHead order={'asc'} orderBy={'asc'} />

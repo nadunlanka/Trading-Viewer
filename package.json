@@ -19,6 +19,7 @@
     "react-data-table-component": "^7.6.2",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
+    "react-search-autocomplete": "^8.5.2",
     "react-table": "^7.8.0",
     "react-toastify": "^10.0.5",
     "styled-components": "^6.1.8",
