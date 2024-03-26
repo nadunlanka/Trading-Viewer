@@ -1,3 +1,5 @@
+import { ToastPosition } from "react-toastify";
+
 export type TradingData = {
   id: string;
   symbol: string;
@@ -45,3 +47,14 @@ export type EnhancedTableProps = {
   order: 'asc' | 'desc';
   orderBy: string;
 };
+
+export type ToastConfig = {
+  position: ToastPosition | undefined;
+  autoClose: number;
+  hideProgressBar: boolean;
+  closeOnClick: boolean;
+  pauseOnHover: boolean;
+  draggable: boolean;
+  progress: undefined;
+  theme: string;
+}

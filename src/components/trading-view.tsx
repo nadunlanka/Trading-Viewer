@@ -5,6 +5,7 @@ import {
   Currencies,
   EnhancedTableProps,
   HeadCell,
+  ToastConfig,
   TradingData,
   formatCurrency,
   formatNumber
@@ -18,12 +19,24 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { TableHead } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
+import { COIN_GECKO_API, COIN_GECKO_COIN_URL, COIN_GECKO_IMAGE_URL, LOADING_ERROR } from '../const';
 
 const TradingDataTable: React.FC = () => {
   const colors = {
     success: '#66bb6a',
     error: '#f44336',
     coinColor: '#ce93d8'
+  };
+
+  const toastConfig: ToastConfig = {
+    position: 'top-right',
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: 'light'
   };
 
   const [data, setData] = useState<TradingData[]>([]);
@@ -39,20 +52,11 @@ const TradingDataTable: React.FC = () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currencies.currency}&page=${activePage + 1}&per_page=${rowsPerPage}&price_change_percentage=1h,24h,7d`
+          `${COIN_GECKO_API}/coins/markets?vs_currency=${currencies.currency}&page=${activePage + 1}&per_page=${rowsPerPage}&price_change_percentage=1h,24h,7d`
         );
         setData(response.data);
       } catch (error: unknown) {
-        toast.error('Something went wrong while fetching data!', {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light'
-        });
+        toast.error(LOADING_ERROR, toastConfig);
       } finally {
         setLoading(false);
       }
@@ -64,19 +68,10 @@ const TradingDataTable: React.FC = () => {
     const fetchGlobalData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`https://api.coingecko.com/api/v3/global`);
+        const response = await axios.get(`${COIN_GECKO_API}/global`);
         setCurrencyCount(response.data.data.active_cryptocurrencies);
       } catch (error: unknown) {
-        toast.error('Something went wrong while fetching data!', {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light'
-        });
+        toast.error(LOADING_ERROR, toastConfig);
       } finally {
         setLoading(false);
       }
@@ -86,7 +81,7 @@ const TradingDataTable: React.FC = () => {
 
   const getCoinId = (imageLink: string) => {
     return parseInt(
-      imageLink.split('https://assets.coingecko.com/coins/images/')[1].split('/large/')[0]
+      imageLink.split(`${COIN_GECKO_IMAGE_URL}/`)[1].split('/large/')[0]
     );
   };
 
@@ -262,7 +257,7 @@ const TradingDataTable: React.FC = () => {
                     <TableCell align="right">
                       <div style={{ marginTop: '5px' }}>
                         <img
-                          src={`https://www.coingecko.com/coins/${getCoinId(row.image)}/sparkline.svg`}
+                          src={`${COIN_GECKO_COIN_URL}/${getCoinId(row.image)}/sparkline.svg`}
                           alt=""
                           width={100}
                         />
