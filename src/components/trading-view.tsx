@@ -80,9 +80,7 @@ const TradingDataTable: React.FC = () => {
   }, []);
 
   const getCoinId = (imageLink: string) => {
-    return parseInt(
-      imageLink.split(`${COIN_GECKO_IMAGE_URL}/`)[1].split('/large/')[0]
-    );
+    return parseInt(imageLink.split(`${COIN_GECKO_IMAGE_URL}/`)[1].split('/large/')[0]);
   };
 
   const headCells: HeadCell[] = [

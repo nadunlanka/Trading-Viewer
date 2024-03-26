@@ -1,4 +1,4 @@
-import { ToastPosition } from "react-toastify";
+import { ToastPosition } from 'react-toastify';
 
 export type TradingData = {
   id: string;
@@ -57,4 +57,4 @@ export type ToastConfig = {
   draggable: boolean;
   progress: undefined;
   theme: string;
-}
+};

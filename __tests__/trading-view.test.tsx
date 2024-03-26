@@ -4,7 +4,7 @@ import '@testing-library/jest-dom';
 import Container from 'react-bootstrap/Container';
 import React from 'react';
 
-jest.mock("axios");
+jest.mock('axios');
 
 describe('This will test trading view component', () => {
   test('Show loader before fetch the data', () => {
@@ -16,7 +16,7 @@ describe('This will test trading view component', () => {
     expect(screen.getAllByText('Loading...')[0]).toBeInTheDocument();
     expect(screen.getAllByText('Trading View')[0]).toBeInTheDocument();
   });
-  
+
   test('Renders trading view data correctly', async () => {
     render(<TradingView />);
     expect(screen.getByText('Loading...')).toBeInTheDocument();
@@ -27,7 +27,5 @@ describe('This will test trading view component', () => {
     // Assert that the rendered data is correct
     expect(screen.getAllByText('Coin')[0]).toBeInTheDocument();
     expect(screen.getAllByText('Price')[0]).toBeInTheDocument();
-
   });
-})
-
+});
