@@ -151,7 +151,8 @@ const TradingDataTable: React.FC = () => {
               key={headCell.id}
               align={headCell.numeric ? 'right' : 'left'}
               padding={headCell.disablePadding ? 'none' : 'normal'}
-              sortDirection={orderBy === headCell.id ? order : false}>
+              sortDirection={orderBy === headCell.id ? order : false}
+            >
               {headCell.label}
             </TableCell>
           ))}
@@ -190,7 +191,8 @@ const TradingDataTable: React.FC = () => {
                           style={{
                             color: colors.coinColor,
                             fontSize: '12px'
-                          }}>
+                          }}
+                        >
                           {row.symbol.toUpperCase()}
                         </div>
                       </div>
@@ -205,7 +207,8 @@ const TradingDataTable: React.FC = () => {
                             row.price_change_percentage_1h_in_currency >= 0
                               ? colors.success
                               : colors.error
-                        }}>
+                        }}
+                      >
                         {row.price_change_percentage_1h_in_currency >= 0 ? (
                           <>&#8613; </>
                         ) : (
@@ -221,7 +224,8 @@ const TradingDataTable: React.FC = () => {
                             row.price_change_percentage_24h_in_currency >= 0
                               ? colors.success
                               : colors.error
-                        }}>
+                        }}
+                      >
                         {row.price_change_percentage_24h_in_currency >= 0 ? (
                           <>&#8613; </>
                         ) : (
@@ -237,7 +241,8 @@ const TradingDataTable: React.FC = () => {
                             row.price_change_percentage_7d_in_currency >= 0
                               ? colors.success
                               : colors.error
-                        }}>
+                        }}
+                      >
                         {row.price_change_percentage_7d_in_currency >= 0 ? (
                           <>&#8613; </>
                         ) : (
