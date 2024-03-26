@@ -220,7 +220,13 @@ const TradingDataTable: React.FC = () => {
                   ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   : data
                 ).map((row) => (
-                  <TableRow key={row.name}>
+                  <TableRow
+                    key={row.name}
+                    onClick={() => {
+                      window.open(`${COIN_GECKO_COIN_URL}/${row.id}`, '_blank');
+                    }}
+                    style={{ cursor: 'pointer' }}
+                  >
                     <TableCell component="th" scope="row">
                       {row.market_cap_rank}
                     </TableCell>

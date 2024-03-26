@@ -48,6 +48,10 @@
   margin-bottom: 10px;
 }
 
+.MuiToolbar-root{
+  z-index: -1;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
