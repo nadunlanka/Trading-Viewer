@@ -1,6 +1,4 @@
-# Trading Viewer with CoinGecko
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Trading Dashboard using CoinGecko
 
 ## Available Scripts
 
