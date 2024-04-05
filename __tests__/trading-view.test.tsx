@@ -34,4 +34,4 @@ describe('This will test trading view component', () => {
       });
     });
   });
-})
+});
