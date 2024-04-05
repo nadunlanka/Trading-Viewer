@@ -23,7 +23,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import { COIN_GECKO_API, COIN_GECKO_COIN_URL, COIN_GECKO_IMAGE_URL, LOADING_ERROR } from '../const';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 import TradingSingleView from './full-view';
-// import TradingSingleView from './new';
 
 const TradingDataTable: React.FC = () => {
   const colors = {
@@ -41,38 +40,6 @@ const TradingDataTable: React.FC = () => {
     draggable: true,
     progress: undefined,
     theme: 'light'
-  };
-
-  const defaultSelectedCoin = {
-    id: 'bitcoin',
-    symbol: 'btc',
-    name: 'Bitcoin',
-    image: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400',
-    current_price: 67659,
-    market_cap: 1332879240320,
-    market_cap_rank: 1,
-    fully_diluted_valuation: 1422712563493,
-    total_volume: 43035282364,
-    high_24h: 69199,
-    low_24h: 66174,
-    price_change_24h: 21.86,
-    price_change_percentage_24h: 0.03231,
-    market_cap_change_24h: 3690130349,
-    market_cap_change_percentage_24h: 0.27762,
-    circulating_supply: 19674012.0,
-    total_supply: 21000000.0,
-    max_supply: 21000000.0,
-    ath: 73738,
-    ath_change_percentage: -8.12298,
-    ath_date: '2024-03-14T07:10:36.635Z',
-    atl: 67.81,
-    atl_change_percentage: 99810.36191,
-    atl_date: '2013-07-06T00:00:00.000Z',
-    roi: null,
-    last_updated: '2024-04-05T15:26:10.434Z',
-    price_change_percentage_1h_in_currency: 0.12069875540991941,
-    price_change_percentage_24h_in_currency: 0.03231226019904953,
-    price_change_percentage_7d_in_currency: -3.466198727823237
   };
 
   const [data, setData] = useState<TradingData[]>([]);

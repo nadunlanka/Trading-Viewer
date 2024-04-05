@@ -10,3 +10,14 @@ export const formatCurrency = (currency: string, price: number) => {
     currency: currency
   }).format(price);
 };
+
+export const removeDuplicates = (array: any, key: any) => {
+  return array.filter((obj: any, index: any) => {
+    return (
+      index ===
+      array.findIndex((o: any) => {
+        return o[key] === obj[key];
+      })
+    );
+  });
+};

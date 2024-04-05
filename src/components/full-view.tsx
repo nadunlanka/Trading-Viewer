@@ -15,9 +15,11 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Loader from './spinner';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { CategoryScale, Chart, LinearScale, PointElement, LineElement, Tooltip } from 'chart.js';
-import { formatCurrency, formatNumber } from '../utils';
+import { ToastConfig, formatCurrency, formatNumber, removeDuplicates } from '../utils';
+import { LOADING_ERROR } from '../const';
 Chart.register(CategoryScale);
 Chart.register(LinearScale);
 Chart.register(PointElement);
@@ -42,6 +44,17 @@ const style = {
   p: 4
 };
 
+const toastConfig: ToastConfig = {
+  position: 'top-right',
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: 'light'
+};
+
 const TradingSingleView: React.FC<any> = ({ selectedCoin, open, handleClose }) => {
   const [priceData, setPriceData] = useState(null);
   const [marketPeriod, setMarketPeriod] = React.useState<number | string>(1);
@@ -56,6 +69,7 @@ const TradingSingleView: React.FC<any> = ({ selectedCoin, open, handleClose }) =
         setPriceData(data.prices);
       } catch (error) {
         console.error('Error fetching price data:', error);
+        toast.error(LOADING_ERROR, toastConfig);
       }
     };
     fetchPriceData();
@@ -76,10 +90,11 @@ const TradingSingleView: React.FC<any> = ({ selectedCoin, open, handleClose }) =
   };
 
   const formatPriceData = (data: any) => {
-    return data.map(([timestamp, price]: any) => ({
+    const updatedData: any = data.map(([timestamp, price]: any) => ({
       x: formatDate(timestamp),
       y: price
     }));
+    return removeDuplicates(updatedData, 'x');
   };
 
   const closeModel = () => {
