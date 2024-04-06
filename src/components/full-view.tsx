@@ -83,9 +83,9 @@ const TradingSingleView: React.FC<any> = ({ selectedCoin, open, handleClose }) =
   const formatDate = (timestamp: Date) => {
     const date = new Date(timestamp);
     if (marketPeriod === 1) {
-      return `${date.getHours()}:${date.getMinutes()}`;
+      return `${date.getHours() < 10 ? '0' : ''}${date.getHours()}:${date.getMinutes() < 10 ? '0' : ''}${date.getMinutes()}`;
     } else {
-      return `${date.getMonth() + 1}/${date.getDate()}`;
+      return `${date.getMonth() < 10 ? '0' : ''}${date.getMonth() + 1}/${date.getDate() < 10 ? '0' : ''}${date.getDate()}`;
     }
   };
 
